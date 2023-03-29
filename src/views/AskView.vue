@@ -1,33 +1,30 @@
 <template>
 	<div>
-		<div v-for="(ask, i) in askList" :key="i">{{ ask.title }}</div>
+		<p v-for="(ask, i) in askItems" :key="i">
+			<a :href="ask.url">{{ ask.title }}</a>
+			<span>{{ ask.time_ago }} by {{ ask.user }}</span>
+		</p>
 	</div>
 </template>
 
 <script>
-// import axios from 'axios'
-import { fetchAsksList } from '../api/index.js';
-
+import { mapState, mapGetters } from 'vuex';
 export default {
-	data() {
-		return {
-			askList: []
-		}
+	computed: {
+		...mapGetters({
+			askItems: 'fetchedAsk' 
+		})
+		//#2
+		// ...mapState({
+		// 	asks: state => state.asksList
+		// })
+		// #1
+		// ask() {
+		// 	return this.$store.state.ask;
+		// }
 	},
 	created() {
-		var vm = this;
-		fetchAsksList()
-			.then(function(res){
-				console.log(res);
-				vm.askList = res.data;
-			})
-			.catch(function(err){  
-				console.log(err)
-			})
-		}
+		this.$store.dispatch('FETCH_ASKS');
 	}
+}
 </script>
-
-<style>
-
-</style>

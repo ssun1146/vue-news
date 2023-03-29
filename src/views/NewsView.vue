@@ -1,29 +1,16 @@
 <template>
   <div>
-    <div v-for="(news, i) in newsList" :key="i">{{ news.title }}</div>
+    <p v-for="(item, i) in this.$store.state.newsList" :key="i">
+      <a :href="item.url" target="_blank">{{ item.title }}</a>
+      <span>{{ item.time_ago }} by {{ item.user }}</span>
+    </p>
   </div>
 </template>
 
 <script>
-// import axios from 'axios'
-import { fetchNewsList } from '../api/index.js';
-
 export default {
-  data() {
-    return {
-      newsList: []
-    }
-  },
   created() {
-    var vm = this;
-    fetchNewsList()
-      .then(function(res){
-        console.log(res);
-        vm.newsList = res.data;
-      } )
-      .catch(function(err){  
-        console.log(err)
-      } )
+    this.$store.dispatch('FETCH_NEWS');
   }
 }
 </script>

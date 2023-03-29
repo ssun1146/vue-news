@@ -1,31 +1,20 @@
 <template>
 	<div>
-		<div v-for="(jobs, i) in jobsList" :key="i">{{ jobs.title }}</div>
+		<p v-for="(job, i) in this.$store.state.jobsList" :key="i">
+			<a :href="job.url" target="_blank">{{ job.title }}</a>
+			<span>{{ job.time_ago }} , {{ job.domain }}</span>
+		</p>
 	</div>
 </template>
 
 <script>
 // import axios from 'axios'
-import { fetchJobsList } from '../api/index.js';
 
 export default {
-	data() {
-		return {
-			jobsList: []
-		}
-	},
 	created() {
-		var vm = this;
-		fetchJobsList()
-			.then(function(res){
-				console.log(res);
-				vm.jobsList = res.data;
-			})
-			.catch(function(err){  
-				console.log(err)
-			})
-		}
+		this.$store.dispatch('FETCH_JOBS');
 	}
+}
 </script>
 
 <style>
