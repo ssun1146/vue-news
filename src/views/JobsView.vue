@@ -8,8 +8,6 @@
 </template>
 
 <script>
-// import axios from 'axios'
-
 export default {
 	created() {
 		this.$store.dispatch('FETCH_JOBS');
