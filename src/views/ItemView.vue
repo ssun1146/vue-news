@@ -1,30 +1,31 @@
 <template>
-  <div>
-    <section class="item_view">
-      <!-- ==== Asks Detail ==== -->
-      <div class="user_container">
-        <div class="user_container__title">User</div>
-        <div class="user_container__info">
-          <router-link :to="`/user/${fetchedItem.user}`" class="user_container__nick"
-            >{{ fetchedItem.user }}
-          </router-link>
-          <p class="user_container__time">{{ fetchedItem.time_ago }}</p>
-        </div>
-      </div>
+  <div class="item_view">
+    <section>
+      <!-- ==== 사용자 정보 ==== -->
+      <user-profile :info="fetchedItem">
+        <router-link slot="username" :to="`/user/${fetchedItem.user}`" class="item_view__nick"
+				>
+          {{ fetchedItem.user }}
+        </router-link>
+        <template slot="time">{{ 'Posted ' + fetchedItem.time_ago }}</template>
+      </user-profile>
+    </section>
+    <section>
       <h2>{{ fetchedItem.title }}</h2>
-      <!-- <p>{{ fetchedItem.title }}</p> -->
-      <div v-html="fetchedItem.content"></div>
     </section>
     <section>
       <!-- ==== Comments Detail ==== -->
+      <div v-html="fetchedItem.content"></div>
     </section>
   </div>
 </template>
 
 <script>
+import UserProfile from '@/components/UserProfile'
 import { mapGetters } from 'vuex';
 
 export default {
+  components:{ UserProfile },
   computed: {
     ...mapGetters(['fetchedItem']),
   },
@@ -37,42 +38,18 @@ export default {
 <style scoped>
 .item_view {
   padding: 20px 24px;
+  box-sizing: border-box;
 }
-.user_container {
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding-left: 28px;
-}
-.user_container::before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  background: #000;
-  transform: translateY(-50%);
-}
-.user_container__title {
-  font-size: 20px;
-  font-weight: bold;
-}
-.user_container__nick {
+
+.item_view__nick {
   font-size: 16px;
   font-weight: bold;
   color: #333;
   text-decoration: none;
 }
-.user_container__info {
-  padding-left: 8px;
-}
-.user_container__time {
-  line-height: 1;
-  margin: 4px 0 0;
-  font-size: 13px;
-  color: #9e9e9e;
+.item_view__nick:hover {
+  color: #42b883;
+  text-decoration: underline;
+
 }
 </style>

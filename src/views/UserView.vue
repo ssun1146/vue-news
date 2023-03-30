@@ -1,25 +1,35 @@
 <template>
-  <div>
-    <p>ID: {{ user.id }}</p>
-    <p>karma: {{ user.karma }}</p>
-    <p>about: {{ user.about }}</p>
-    <p>created: {{ user.created }}</p>
-    <!-- <p>{{ user.created_time }}</p> -->
+  <div class="user_info">
+    <user-profile :info="user">
+      <div slot="username"><div class="user_container__nick"> ID: {{ user.id }} </div></div>
+      <span slot="time"> {{ 'Joined : ' + user.created }},  </span>
+      <span slot="karma"> {{ user.karma }} </span>
+    </user-profile>
   </div>
 </template>
 
 <script>
+import UserProfile from '@/components/UserProfile'
 
 export default {
+  components: { UserProfile },
   computed: {
     user() {
       return this.$store.state.userInfo;
-    }
+    },
   },
   created() {
-    // 인자 여러개를 dispatch 하기 위해서 변수로 묶어서 보내기..!
     const userName = this.$route.params.id;
     this.$store.dispatch('FETCH_USERS', userName);
-  }
-}
+  },
+};
 </script>
+<style scoped>
+p {
+  margin: 0;
+}
+.user_info {
+  padding: 20px 24px;
+  box-sizing: border-box;
+}
+</style>

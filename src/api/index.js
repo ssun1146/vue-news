@@ -11,7 +11,6 @@ function fetchNewsList() {
 }
 function fetchJobsList() {
 	return axios.get(`${config.baseUrl}/jobs/1.json`);
-	
 }
 function fetchAsksList() {
 	return axios.get(`${config.baseUrl}/ask/1.json`);
