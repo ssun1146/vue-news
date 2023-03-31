@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
 		jobsList: [],
 		asksList: [],
 		userInfo: {},
-		itemInfo: {}    // 확인
+		itemInfo: {},    // 확인
+		list:[],
 	}, 
 	getters:{
 		fetchedAsk(state) {
