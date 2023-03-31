@@ -10,8 +10,8 @@ export default{
 	FETCH_NEWS(context) {
 		fetchNewsList()
 			.then(res => {
-				// console.log(res.data);
 				context.commit('SET_NEWS', res.data);
+				return res;
 			})
 			.catch(err => {
 				console.log(err)	
