@@ -22,9 +22,11 @@
 import ListItem from '@/components/ListItem';
 import { mapState, mapGetters } from 'vuex';
 import bus from '@/utils/bus.js';
+import ListMixin from '@/mixins/ListMixin'
 
 export default {
   components: { ListItem },
+  mixins: [ListMixin],
   computed: {
     ...mapGetters({
       askItems: 'fetchedAsk',
@@ -38,19 +40,6 @@ export default {
     // 	return this.$store.state.ask;
     // }
   },
-  created() {
-    bus.$emit('start:spinner');
-    setTimeout(() => {
-      this.$store
-        .dispatch('FETCH_ASKS')
-        .then(() => {
-          console.log('fetched');
-          bus.$emit('end:spinner');
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, 1600);
-  },
+ 
 };
 </script>

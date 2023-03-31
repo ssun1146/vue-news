@@ -9,7 +9,7 @@ import {
 
 export default {
   FETCH_NEWS(context) {
-    fetchNewsList()
+    return fetchNewsList()
       .then((res) => {
         context.commit('SET_NEWS', res.data);
         return res;
@@ -19,7 +19,7 @@ export default {
       });
   },
   FETCH_JOBS(context) {
-    fetchJobsList()
+    return fetchJobsList()
       .then((res) => {
         // console.log(res.data);
         context.commit('SET_JOBS', res.data);
@@ -29,7 +29,7 @@ export default {
       });
   },
   FETCH_ASKS({ commit }) {
-    fetchAsksList()
+    return fetchAsksList()
       .then(function (res) {
         // console.log(res.data);
         commit('SET_ASKS', res.data);
@@ -39,12 +39,15 @@ export default {
       });
   },
 	FETCH_LIST({ commit }, pageName) {
-    fetchList(pageName)
-      .then(({ data }) => commit('SET_LIST', data))
+    return fetchList(pageName)
+      .then(res => {
+        commit('SET_LIST', res.data)
+        return res.data;
+      })
       .catch((err) => console.log(err));
   },
   FETCH_USERS({ commit }, name) {
-    fetchUserInfo(name)
+    return fetchUserInfo(name)
       .then((res) => {
         commit('SET_USERS', res.data);
       })
@@ -53,7 +56,7 @@ export default {
       });
   },
   FETCH_ITEMS({ commit }, item) {
-    fetchItemInfo(item)
+    return fetchItemInfo(item)
       .then((res) => {
         commit('SET_ITEMS', res.data);
       })
@@ -61,5 +64,4 @@ export default {
         console.log(err);
       });
   },
- 
 };
